@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Cambios</title>
+    <!-- Asegúrate de tener tu logo en esta ruta o reemplázala -->
+    <link rel="icon" type="image/png" href="/img/logo.png">
+    
+    <!-- Importamos la fuente Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Importamos Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- SDK DE SUPABASE (NECESARIO) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Importamos el CSS compartido -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 text-gray-800 antialiased">
+
+    <!-- Barra de Navegación Principal -->
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Izquierda: Logo + Nombre -->
+                <div class="flex-shrink-0 flex items-center">
+                     <img class="h-16 w-auto" src="/img/logo.png" alt="Logo Impresos S.R.L.">
+                    <span class="font-bold text-xl text-gray-800 ml-2">Impresos S.R.L.</span>
+                </div>
+
+                <!-- Centro: Enlaces de Navegación (Desktop) -->
+                <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                    <a href="inicio.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
+                        Inicio
+                    </a>
+                    <a href="inventarios.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
+                        Gestión de Inventarios
+                    </a>
+                    <a href="reportes.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
+                        Reportes
+                    </a>
+                    <!-- Enlace activo -->
+                    <a href="historial.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-blue-500 text-sm font-medium text-gray-900">
+                        Historial de Cambios
+                    </a>
+                </div>
+                
+                <!-- Derecha: Botón Cerrar Sesión (Desktop) -->
+                <button id="logoutButton" class="hidden sm:ml-6 sm:inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-red-600 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                    <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    Cerrar Sesión
+                </button>
+
+                <!-- Derecha: Botón de Menú Móvil -->
+                <div class="-mr-2 flex items-center sm:hidden">
+                    <button type="button" id="mobileMenuButton" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Abrir menú principal</span>
+                            <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                            <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Menú Móvil (desplegable) -->
+        <div class="sm:hidden hidden" id="mobile-menu">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="inicio.html" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800">Inicio</a>
+                <a href="inventarios.html" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800">Gestión de Inventarios</a>
+                <a href="reportes.html" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800">Reportes</a>
+                <!-- Enlace activo -->
+                <a href="historial.html" class="block pl-3 pr-4 py-2 border-l-4 border-blue-500 text-base font-medium text-blue-700 bg-blue-50">Historial de Cambios</a>
+            </div>
+            <!-- Botón Cerrar Sesión (Móvil) -->
+            <div class="pt-4 pb-3 border-t border-gray-200">
+                <div class="flex items-center px-4">
+                    <button id="logoutButtonMobile" class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md text-base font-medium text-red-700 bg-red-100 hover:bg-red-200">
+                        <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                        Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Encabezado -->
+    <header class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold text-blue-800 text-center sm:text-left">Historial de Cambios</h1>
+                <p class="text-xl text-gray-600 mt-1 text-center sm:text-left">Impresos S.R.L.</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal - PÁGINA DE HISTORIAL -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
+        <div class="bg-white p-8 rounded-lg shadow-lg">
+            <h3 class="text-lg font-medium text-gray-900">Registro de Actividad</h3>
+            <p class="mt-2 text-sm text-gray-600">Aquí se mostrarán los cambios realizados en el inventario, como creación, edición o eliminación de productos.</p>
+            
+            <!-- INICIO DE LA TABLA DE HISTORIAL -->
+            <div class="mt-6 overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <!-- ¡NUEVA COLUMNA Y PRIMERA! -->
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Usuario (Email)</th>
+                            <!-- Columnas en el orden solicitado -->
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Producto (SKU)</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo de cambio</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Campo modificado</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valor anterior</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valor nuevo</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha y hora</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTableBody" class="bg-white divide-y divide-gray-200">
+                        <!-- El script historial.js llenará esta tabla -->
+                    </tbody>
+                </table>
+                
+                <!-- Estado Vacío para la tabla de historial -->
+                <div id="historyEmptyState" class="text-center py-16 text-gray-500 hidden">
+                    <svg class="mx-auto h-16 w-16 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <h3 class="mt-4 text-lg font-medium text-gray-900">No hay historial de cambios</h3>
+                    <p class="mt-2 text-sm text-gray-500">Realiza un cambio en la pestaña "Gestión de Inventarios" para verlo aquí.</p>
+                </div>
+            </div>
+            <!-- FIN DE LA TABLA DE HISTORIAL -->
+
+        </div>
+
+    </main>
+
+    <!-- Script específico de historial -->
+    <script src="historial.js" type="module"></script>
+</body>
+</html>

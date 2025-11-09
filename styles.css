@@ -1,0 +1,47 @@
+/* Estilos para la fuente Inter */
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Ocultar elementos por defecto */
+.hidden {
+    display: none;
+}
+
+/* Estilos para el backdrop del modal */
+.modal-backdrop {
+    transition: opacity 0.3s ease;
+}
+
+/* Estilos para el panel del modal */
+.modal-panel {
+    transition: all 0.3s ease;
+}
+
+/* --- NUEVOS ESTILOS PARA PAGINACIÓN --- */
+
+/* Estilos para los botones de paginación */
+.pagination-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem; /* 8px 16px */
+    border: 1px solid #D1D5DB; /* border-gray-300 */
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500; /* medium */
+    color: #374151; /* text-gray-700 */
+    background-color: #FFFFFF; /* bg-white */
+    border-radius: 0.375rem; /* rounded-md */
+    transition: background-color 0.2s;
+}
+
+.pagination-btn:hover {
+    background-color: #F9FAFB; /* hover:bg-gray-50 */
+}
+
+/* Estilo para botones deshabilitados */
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #F9FAFB; /* bg-gray-50 */
+}

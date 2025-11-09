@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes</title>
+    <link rel="icon" type="image/png" href="img/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- SDK DE SUPABASE (AÑADIDO Y NECESARIO) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <link rel="stylesheet" href="styles.css">
+    <!-- ELIMINADO: <link rel="stylesheet" href="reportes.css"> (No existía) -->
+</head>
+<body class="bg-gray-100 text-gray-800 antialiased">
+
+    <!-- Barra de Navegación Principal (sin cambios) -->
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Izquierda: Logo + Nombre -->
+                <div class="flex-shrink-0 flex items-center">
+                     <img class="h-16 w-auto" src="img/logo.png" alt="Logo Impresos S.R.L.">
+                    <span class="font-bold text-xl text-gray-800 ml-2">Impresos S.R.L.</span>
+                </div>
+
+                <!-- Centro: Enlaces de Navegación (Desktop) -->
+                <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                    <a href="inicio.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
+                        Inicio
+                    </a>
+                    <a href="inventarios.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
+                        Gestión de Inventarios
+                    </a>
+                    <a href="reportes.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-blue-500 text-sm font-medium text-gray-900">
+                        Reportes
+                    </a>
+                    <a href="historial.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
+                        Historial de Cambios
+                    </a>
+                </div>
+                
+                <!-- Derecha: Botón Cerrar Sesión (Desktop) -->
+                <button id="logoutButton" class="hidden sm:ml-6 sm:inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-red-600 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                    <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    Cerrar Sesión
+                </button>
+
+                <!-- Derecha: Botón de Menú Móvil -->
+                <div class="-mr-2 flex items-center sm:hidden">
+                    <button type="button" id="mobileMenuButton" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Abrir menú principal</span>
+                            <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                            <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Menú Móvil (desplegable) -->
+        <div class="sm:hidden hidden" id="mobile-menu">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="inicio.html" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800">Inicio</a>
+                <a href="inventarios.html" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800">Gestión de Inventarios</a>
+                <a href="reportes.html" class="block pl-3 pr-4 py-2 border-l-4 border-blue-500 text-base font-medium text-blue-700 bg-blue-50">Reportes</a>
+                <a href="historial.html" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800">Historial de Cambios</a>
+            </div>
+            <!-- Botón Cerrar Sesión (Móvil) -->
+            <div class="pt-4 pb-3 border-t border-gray-200">
+                <div class="flex items-center px-4">
+                    <button id="logoutButtonMobile" class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md text-base font-medium text-red-700 bg-red-100 hover:bg-red-200">
+                        <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                        Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Encabezado (sin cambios) -->
+    <header class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold text-blue-800 text-center sm:text-left">Reportes</h1>
+                <p class="text-xl text-gray-600 mt-1 text-center sm:text-left">Impresos S.R.L.</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal - PÁGINA DE REPORTES (Modificado) -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 class="text-2xl font-semibold text-gray-900 mb-6">Reportes de Gestión</h2>
+        <!-- Modificado a 1 columna para tablas más anchas -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+            <!-- Reporte 1: Reporte de Reposición Sugerida -->
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-lg font-medium text-gray-900">Reporte de Reposición Sugerida</h3>
+                <p class="mt-2 text-sm text-gray-600">Calcula cuánto falta para llegar al stock mínimo. (Para Compras)</p>
+                <!-- Contenedor para la tabla -->
+                <div class="mt-4 max-h-96 overflow-y-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50 sticky top-0">
+                            <tr>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Producto</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Actual</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Mínimo</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Comprar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reporteReposicionList" class="bg-white divide-y divide-gray-200">
+                            <!-- JS llenará esta tabla -->
+                        </tbody>
+                    </table>
+                    <p id="reporteReposicionEmpty" class="text-sm text-gray-500 py-4 hidden">
+                        No hay productos que necesiten reposición.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Reporte 2: Reporte de Productos Próximos a Agotar -->
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-lg font-medium text-gray-900">Reporte de Productos Próximos a Agotar</h3>
+                <p class="mt-2 text-sm text-gray-600">Estado intermedio "Atención" (Sobre el mínimo, pero cerca de él).</p>
+                <!-- Contenedor para la tabla -->
+                <div class="mt-4 max-h-96 overflow-y-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50 sticky top-0">
+                            <tr>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Producto</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Actual</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Mínimo</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">% Restante</th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reporteAtencionList" class="bg-white divide-y divide-gray-200">
+                            <!-- JS llenará esta tabla -->
+                        </tbody>
+                    </table>
+                    <p id="reporteAtencionEmpty" class="text-sm text-gray-500 py-4 hidden">
+                        No hay productos en estado de "Atención".
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Script específico de reportes -->
+    <script src="reportes.js" type="module"></script>
+</body>
+</html>

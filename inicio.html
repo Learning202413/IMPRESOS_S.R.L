@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="icon" type="image/png" href="/img/logo.png">
+    <!-- Importamos la fuente Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Importamos Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Importamos el CSS local (asumo que existe styles.css) -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 text-gray-800 antialiased">
+
+    <!-- Barra de Navegación Principal -->
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Izquierda: Logo + Nombre -->
+                <div class="flex-shrink-0 flex items-center">
+                    <img class="h-16 w-auto" src="img/logo.png" alt="Logo Impresos S.R.L.">
+                    <span class="font-bold text-xl text-gray-800 ml-2">Impresos S.R.L.</span>
+                </div>
+
+                <!-- Centro: Enlaces de Navegación (Desktop) -->
+                <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                    <!-- Enlace activo -->
+                    <a href="inicio.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-blue-500 text-sm font-medium text-gray-900">
+                        Inicio
+                    </a>
+                    <a href="inventarios.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
+                        Gestión de Inventarios
+                    </a>
+                    <a href="reportes.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
+                        Reportes
+                    </a>
+                    <a href="historial.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
+                        Historial de Cambios
+                    </a>
+                </div>
+                <!-- Botón Cerrar Sesión (Desktop) -->
+                <button id="logoutButton" class="hidden sm:inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-red-600 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                    <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    Cerrar Sesión
+                </button>
+                
+                <!-- Derecha: Botón de Menú Móvil -->
+                <div class="-mr-2 flex items-center sm:hidden">
+                    <button type="button" id="mobileMenuButton" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Abrir menú principal</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menú Móvil (desplegable) -->
+        <div class="sm:hidden hidden" id="mobile-menu">
+            <div class="pt-2 pb-3 space-y-1">
+                <a href="inicio.html" class="block pl-3 pr-4 py-2 border-l-4 border-blue-500 text-base font-medium text-blue-700 bg-blue-50">Inicio</a>
+                <a href="inventarios.html" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800">Gestión de Inventarios</a>
+                <a href="reportes.html" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800">Reportes</a>
+                <a href="historial.html" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800">Historial de Cambios</a>
+            </div>
+            <!-- Botón Cerrar Sesión (Móvil) -->
+            <div class="pt-4 pb-3 border-t border-gray-200">
+                <div class="flex items-center px-4">
+                    <button id="logoutButtonMobile" class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md text-base font-medium text-red-700 bg-red-100 hover:bg-red-200">
+                        <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                        Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Encabezado (Restaurado a la versión simple) -->
+    <header class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div>
+                <h1 class="text-3xl font-bold text-blue-800 text-center sm:text-left">Resumen General del Inventario</h1>
+                <p class="text-xl text-gray-600 mt-1 text-center sm:text-left">Impresos S.R.L.</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- Contenido del Dashboard -->
+        <div id="dashboardContent">
+            <!-- Tarjetas de Resumen -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Card: Artículos Totales (SKUs) -->
+                <div class="bg-white p-6 rounded-lg shadow-lg flex justify-between items-center">
+                    <div>
+                        <span class="text-sm font-medium text-gray-500">Artículos Totales (SKUs)</span>
+                        <p id="totalSkus" class="text-3xl font-bold text-gray-900 mt-1">0</p>
+                    </div>
+                    <div class="bg-blue-100 text-blue-600 p-3 rounded-full">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                    </div>
+                </div>
+                <!-- Card: Stock Total (Unidades) -->
+                <div class="bg-white p-6 rounded-lg shadow-lg flex justify-between items-center">
+                    <div>
+                        <span class="text-sm font-medium text-gray-500">Stock Total (Unidades)</span>
+                        <p id="totalStock" class="text-3xl font-bold text-gray-900 mt-1">0</p>
+                    </div>
+                    <div class="bg-green-100 text-green-600 p-3 rounded-full">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7l8-4 8 4M4 12l8 4 8-4"></path></svg>
+                    </div>
+                </div>
+                <!-- Card: Alertas de Stock -->
+                <div class="bg-white p-6 rounded-lg shadow-lg flex justify-between items-center">
+                    <div>
+                        <span class="text-sm font-medium text-gray-500">Alertas de Stock</span>
+                        <p id="stockAlerts" class="text-3xl font-bold text-red-600 mt-1">0</p>
+                    </div>
+                    <div class="bg-red-100 text-red-600 p-3 rounded-full">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accesos Directos -->
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-semibold text-gray-900 mb-6">Accesos Directos</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <a href="inventarios.html" class="block p-6 bg-blue-50 hover:bg-blue-100 rounded-lg shadow-md transition-all duration-300">
+                        <div class="flex items-center">
+                            <svg class="w-8 h-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                            </svg>
+                            <h3 class="text-xl font-bold text-blue-800 ml-4">Ir a Gestión de Inventarios</h3>
+                        </div>
+                        <p class="text-gray-600 mt-2">Ver, agregar, editar y eliminar productos del inventario.</p>
+                    </a>
+                    <a href="reportes.html" class="block p-6 bg-green-50 hover:bg-green-100 rounded-lg shadow-md transition-all duration-300">
+                        <div class="flex items-center">
+                            <svg class="w-8 h-8 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            <h3 class="text-xl font-bold text-green-800 ml-4">Ver Reportes</h3>
+                        </div>
+                        <p class="text-gray-600 mt-2">Revisar productos que necesitan reposición y los próximos a agotarse.</p>
+                    </a>
+                    <a href="historial.html" class="block p-6 bg-yellow-50 hover:bg-yellow-100 rounded-lg shadow-md transition-all duration-300">
+                        <div class="flex items-center">
+                            <svg class="w-8 h-8 text-yellow-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <h3 class="text-xl font-bold text-yellow-800 ml-4">Ver Historial de Cambios</h3>
+                        </div>
+                        <p class="text-gray-700 mt-2">Revisar el registro de modificaciones del inventario.</p>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Script se importa al final -->
+    <script src="inicio.js" type="module"></script>
+</body>
+</html>
